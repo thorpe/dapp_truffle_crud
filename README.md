@@ -1,4 +1,4 @@
-# Webpack Truffle Box
+# Crud Example With Truffle
 
 This box it our most bare official implementation with Webpack. Includes contracts, migrations, tests, user interface and webpack build pipeline.
 
