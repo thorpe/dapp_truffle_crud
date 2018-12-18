@@ -31,26 +31,12 @@ const App = {
       accounts = accs;
       account = accounts[0];
 
-      self.refreshBalance();
     })
   },
 
   setStatus: function (message) {
     const status = document.getElementById('status');
     status.innerHTML = message;
-  },
-
-  refreshBalance: function () {
-    const self = this;
-    MetaCoin.deployed().then(function (instance) {
-      return instance.getBalance.call(account, {from: account});
-    }).then(function (value) {
-      const balanceElement = document.getElementById('balance');
-      balanceElement.innerHTML = value.valueOf();
-    }).catch(function (e) {
-      console.log(e);
-      self.setStatus('Error getting balance; see log.');
-    })
   },
 
 
