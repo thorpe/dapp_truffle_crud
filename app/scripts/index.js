@@ -4,10 +4,8 @@ import '../styles/app.css';
 import {default as Web3} from 'web3';
 import {default as contract} from 'truffle-contract';
 
-import metaCoinArtifact from '../../build/contracts/MetaCoin.json';
 import crudAppArtifact from '../../build/contracts/CrudApp.json';
 
-const MetaCoin = contract(metaCoinArtifact);
 const CrudApp = contract(crudAppArtifact);
 
 let accounts;
@@ -17,7 +15,6 @@ const App = {
   start: function () {
     const self = this;
 
-    MetaCoin.setProvider(web3.currentProvider);
     CrudApp.setProvider(web3.currentProvider);
 
     web3.eth.getAccounts(function (err, accs) {
@@ -56,24 +53,6 @@ const App = {
     })
   },
 
-  sendCoin: function () {
-    const self = this;
-    const amount = parseInt(document.getElementById('amount').value);
-    const receiver = document.getElementById('receiver').value;
-    this.setStatus('Initiating transaction... (please wait)');
-
-    let meta;
-    MetaCoin.deployed().then(function (instance) {
-      meta = instance;
-      return meta.sendCoin(receiver, amount, {from: account})
-    }).then(function () {
-      self.setStatus('Transaction complete!');
-      self.refreshBalance();
-    }).catch(function (e) {
-      console.log(e);
-      self.setStatus('Error sending coin; see log.');
-    })
-  },
 
   doInsert: function () {
     const self = this;

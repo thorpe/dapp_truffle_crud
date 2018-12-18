@@ -1,6 +1,6 @@
 # Crud Example With Truffle
+This is Example code of Smart contract on ERC20.
 
-This box it our most bare official implementation with Webpack. Includes contracts, migrations, tests, user interface and webpack build pipeline.
 
 ## Installation
 
@@ -32,4 +32,9 @@ npm run dev
 5. Truffle can run tests written in Solidity or JavaScript against your smart contracts. Note the command varies slightly if you're in or outside of the development console.
 ```javascript
 truffle test
+```
+
+6. go to webpage
+```javascript
+http://localhost:8080/
 ```
