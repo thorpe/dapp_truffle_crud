@@ -29,12 +29,8 @@ truffle migrate
 npm run dev
  ```
 
-5. Truffle can run tests written in Solidity or JavaScript against your smart contracts. Note the command varies slightly if you're in or outside of the development console.
-```javascript
-truffle test
-```
 
-6. go to webpage
+5. go to webpage
 ```javascript
 http://localhost:8080/
 ```

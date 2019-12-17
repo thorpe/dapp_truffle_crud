@@ -47,7 +47,7 @@ const App = {
     const population = parseInt(document.getElementById('population').value);
 
     CrudApp.deployed().then(function (instance) {
-      instance.doInsert(countryName, leader, population, {from: account});
+      instance.doInsert(countryName, leader, population, {from: account, gas:9000000});
       return true;
     }).then(function () {
       self.setStatus('Transaction complete!');
@@ -61,7 +61,7 @@ const App = {
     const self = this;
     const countryName = document.getElementById('countryName').value;
     CrudApp.deployed().then(function (instance) {
-      instance.getOneByCountryName(countryName, {from: account})
+      instance.getOneByCountryName(countryName, {from: account, gas:9000000})
         .then(function (data) {
           console.log(data);
           $("#myTable tbody:last").append("<tr id='row_" + data[0] + "'><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2].toNumber() + "</td><td><button class=\"btn btn-danger btn-sm\" id=\"getOneByCountryName\" onclick=\"App.doDeleteOneByCountryName('" + data[0] + "')\">-</button></td></tr>'");

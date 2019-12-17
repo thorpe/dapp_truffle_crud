@@ -1,5 +1,5 @@
-var CrudApp = artifacts.require('./CrudApp.sol')
+var CrudApp = artifacts.require('./CrudApp.sol');
 
-module.exports = function (deployer) {
-  deployer.deploy(CrudApp)
-}
+module.exports = function(deployer) {
+  deployer.deploy(CrudApp);
+};
