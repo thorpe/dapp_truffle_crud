@@ -88,12 +88,12 @@ contract CrudApp {
     }
 
 
-    function getMany() public view returns (uint[]) {
-        for (uint256 i = 0; i < totalCountries; i++) {
-            xs.push(i);
-        }
-
-        return xs;
-    }
+//    function getMany() public view returns (uint[]) {
+//        for (uint256 i = 0; i < totalCountries; i++) {
+//            xs.push(i);
+//        }
+//
+//        return xs;
+//    }
 
 }
