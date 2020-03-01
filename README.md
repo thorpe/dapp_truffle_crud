@@ -5,14 +5,18 @@ This is Example code of Smart contract on ERC20.
 ## Installation
 
 #### 0. Requirement.
-node 10.15.1
+```
+node version : 10.15.1
+web3 version : 1.0.0-beta.37
+truffle
+ganache-cli
+```
 
 
 #### 1. Install Truffle and Ganache globally.
  ```javascript
 npm install -g truffle
 npm install -g ganache-cli
-ganache-cli
  ```
 
 #### 2. Download and Install Application.

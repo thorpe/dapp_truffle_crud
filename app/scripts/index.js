@@ -1,4 +1,3 @@
-// Import the page's CSS. Webpack will know what to do with it.
 import '../styles/app.css';
 
 import {default as Web3} from 'web3';
@@ -41,22 +40,16 @@ const App = {
         const countryName = document.getElementById('countryName').value;
         const leader = document.getElementById('leader').value;
         const population = parseInt(document.getElementById('population').value);
-        alert('1')
 
         CrudApp.deployed().then(function (instance) {
-            alert('2')
             instance.doInsert(countryName, leader, population, {from: account});
             self.setStatus('Transaction complete!');
         }).then(function () {
-            alert('111111')
             self.setStatus('Transaction complete!');
         }).catch(function (e) {
-            alert('222222')
             console.log(e);
             self.setStatus('Error sending coin; see log.');
         })
-
-        alert('2')
     },
 
     getOneByCountryName: function () {
@@ -96,7 +89,6 @@ const App = {
         const leader = document.getElementById('leader').value;
 
         CrudApp.deployed().then(function (instance) {
-            alert('1')
             instance.doUpdateLeader(countryName, leader, {from: account});
         }).then(function () {
             self.setStatus('Transaction complete!');
@@ -105,6 +97,7 @@ const App = {
             self.setStatus('Error sending coin; see log.');
         })
     },
+
     doDeleteOneByCountryName: function (countryName) {
         const self = this;
         CrudApp.deployed().then(function (instance) {
@@ -143,12 +136,7 @@ window.App = App;
 window.addEventListener('load', async function () {
     if (window.ethereum) {
         window.web3 = new Web3(ethereum);
-        try {
-            await ethereum.enable();
-
-        } catch (error) {
-         alert('2221')
-        }
+        await ethereum.enable();
     } else if (window.web3) {
         window.web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'));
     } else {
