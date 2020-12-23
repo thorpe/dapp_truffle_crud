@@ -2,7 +2,7 @@
   "env": {
     "browser": true
   },
-  "globals" : {
-    "web3" : true
+  "globals": {
+    "web3": true
   }
 }
