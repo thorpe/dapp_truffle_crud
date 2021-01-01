@@ -1,4 +1,5 @@
 pragma solidity >=0.4.21 <0.7.0;
+pragma experimental ABIEncoderV2;
 
 
 contract CrudApp {
@@ -8,8 +9,6 @@ contract CrudApp {
         string leader;
         uint256 population;
     }
-
-    uint[] xs;
 
     country[] public countries;
 
@@ -76,7 +75,7 @@ contract CrudApp {
 
 
     function compareStrings(string a, string b) internal pure returns (bool){
-        return keccak256(abi.encodePacked(a,b)) == keccak256(abi.encodePacked(a,b));
+        return keccak256(abi.encodePacked(a, b)) == keccak256(abi.encodePacked(a, b));
     }
 
 
@@ -85,12 +84,37 @@ contract CrudApp {
     }
 
 
-//    function getMany() public view returns (uint[]) {
-//        for (uint256 i = 0; i < totalCountries; i++) {
-//            xs.push(i);
-//        }
-//
-//        return xs;
-//    }
+    function getList() public view returns (country[] memory) {
+        return countries;
+        }
+
+    function getData() constant returns (bytes32, bytes32) {
+        bytes32 a = "abcd";
+        bytes32 b = "wxyzasdfsf";
+        return (a, b);
+    }
+
+    function getDynamicData() constant returns (bytes, bytes) {
+        bytes a;
+        a.push('a');
+        a.push('a');
+        a.push('c');
+        bytes b;
+        b.push('x');
+        b.push('y');
+        b.push('z');
+        return (a, b);
+    }
+
+
+    string [] private strings;
+
+    function addString(string memory str) public {
+        strings.push(str);
+    }
+
+    function getStrings() public view returns (string [] memory) {
+        return strings;
+    }
 
 }

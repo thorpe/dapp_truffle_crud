@@ -1,10 +1,13 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
-const MNEMONIC = "betray rare learn across tuition empower fit avocado ritual father swallow merry";
+const MNEMONIC = "warm actual put oxygen develop tiny wait matrix they shift tiger dentist";
 
 //ropsten
-//betray rare learn across tuition empower fit avocado ritual father swallow merry
-//748A50AB52125CE24F812F3DF3D10BB2D2FA1A13E1A840A34AD9A7C6C2C984D8
-//0xe628B49f7C48d9E38DC65B73B4A3236015ba163a
+//warm actual put oxygen develop tiny wait matrix they shift tiger dentist
+//private : 8aca17608e60b2fec96ad653b49292a00ff29740a0c18fbfd153a90519c0060d
+//address : 0xD807dD9aC8Bd18c353859A4652794aebC3A9a50b
+
+//LOCAL
+//contract address : 0x4e49Df439274EAF53955A438682f93C31fE74398
 
 
 module.exports = {
@@ -18,12 +21,17 @@ module.exports = {
      network_id: "*",       // Any network (default: none)
     },
 
-
-    // Useful for deploying to a public network.
-    // NB: It's important to wrap the provider as a function.
     ropsten: {
-      provider: () => new HDWalletProvider(MNEMONIC, `https://ropsten.infura.io/v3/7fe781e239744fd8b5b73760a3573e40`),
+      provider: () => new HDWalletProvider(MNEMONIC, `https://ropsten.infura.io/v3/935b72666cbf45089be0326b2c2fc1c3`),
       network_id: 3,       // Ropsten's id
+      gas: 4500000,        // Ropsten has a lower block limit than mainnet
+      confirmations: 0,    // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 50,  // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
+    mainnet: {
+      provider: () => new HDWalletProvider(MNEMONIC, `https://mainnet.infura.io/v3/935b72666cbf45089be0326b2c2fc1c3`),
+      network_id: 1,       // Ropsten's id
       gas: 4500000,        // Ropsten has a lower block limit than mainnet
       confirmations: 0,    // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 50,  // # of blocks before a deployment times out  (minimum/default: 50)

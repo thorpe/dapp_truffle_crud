@@ -2,20 +2,41 @@ const CrudApp = artifacts.require('CrudApp');
 
 contract('CrudApp', function() {
 
-  it('should insert new user', async () => {
+  it('=====================', async () => {
     const crudApp = await CrudApp.deployed();
-    await crudApp.doInsert('USA1', 'Trumpq', 30000000);
-    await crudApp.doInsert('USA2', '11', 30000000);
-    await crudApp.doInsert('USA3', '22', 30000000);
-    await crudApp.doInsert('USA4', '33', 30000000);
-    const count = await crudApp.getTotalCountries();
-    assert(count.toNumber()  ===  4);
+    await crudApp.doInsert('USA1', 'aaaa', 1);
+    await crudApp.doInsert('USA1', 'bbbb', 2);
+    await crudApp.doInsert('USA1', 'cccc', 3);
+    await crudApp.doInsert('USA2', '11', 4);
+    await crudApp.doInsert('USA3', '22', 5);
+    await crudApp.doInsert('USA4', '33', 6);
+
+
+    const aaaa = await crudApp.getData();
+    console.log("--------------------------")
+    console.log(aaaa)
+
+    const bbbb = await crudApp.getDynamicData();
+    console.log("--------------------------")
+    console.log(bbbb)
+
+    const cccc = await crudApp.getList();
+    console.log("--------------------------")
+    console.log(cccc)
   });
 
-  it('should insert new user2', async () => {
+
+  it('=====================', async () => {
     const crudApp = await CrudApp.deployed();
-    const info = await crudApp.getOneByCountryName("USA1");
-    console.log(info)
+    await crudApp.addString('USA1');
+    await crudApp.addString('USA2');
+    await crudApp.addString('USA3');
+
+    const aaaa = await crudApp.getStrings();
+    console.log("--------------------------")
+    console.log(aaaa)
+
   });
+
 
 });
