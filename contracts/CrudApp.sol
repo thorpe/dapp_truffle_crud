@@ -9,9 +9,6 @@ contract CrudApp {
         uint256 population;
     }
 
-    uint256 _unixTimestamp;
-    uint256 _timeExpired;
-
     uint[] xs;
 
     country[] public countries;
