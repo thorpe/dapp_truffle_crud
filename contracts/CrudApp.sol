@@ -102,13 +102,15 @@ contract CrudApp {
 
     function getDynamicData() constant returns (bytes, bytes) {
         bytes a;
+        bytes b;
         a.push('a');
         a.push('a');
         a.push('c');
-        bytes b;
+
         b.push('x');
         b.push('y');
         b.push('z');
+        
         return (a, b);
     }
 
