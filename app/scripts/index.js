@@ -12,7 +12,6 @@ let account;
 
 const App = {
   start: function () {
-    const self = this;
     CrudApp.setProvider(web3.currentProvider);
     web3.eth.getAccounts(function (err, accs) {
       if (err != null) {
@@ -35,99 +34,102 @@ const App = {
     status.innerHTML = message;
   },
 
-  doInsert: function () {
+  doInsert: async function () {
     const self = this;
+    self.setStatus('');
     const countryName = document.getElementById('countryName').value;
     const leader = document.getElementById('leader').value;
     const population = parseInt(document.getElementById('population').value);
 
-    CrudApp.deployed().then(function (instance) {
-      instance.doInsert(countryName, leader, population, { from: account });
-      self.setStatus('Transaction complete!');
-    }).then(function () {
-      self.setStatus('Transaction complete!');
-    }).catch(function (e) {
-      console.log(e);
-      self.setStatus('Error sending coin; see log.');
-    })
+    const instance = await CrudApp.deployed();
+    await instance.doInsert(countryName, leader, population, { from: account });
+
+    self.setStatus('Insert complete!');
   },
 
-  getOneByCountryName: function () {
-    const self = this;
+  getOneByCountryName: async function () {
     const countryName = document.getElementById('countryName').value;
-    CrudApp.deployed().then(function (instance) {
-      instance.getOneByCountryName(countryName, { from: account, gas: 9000000 })
-        .then(function (data) {
-          console.log(data);
-          $("#myTable tbody:last").append("<tr id='row_" + data[0] + "'><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2].toNumber() + "</td><td><button class=\"btn btn-danger btn-sm\" id=\"getOneByCountryName\" onclick=\"App.doDeleteOneByCountryName('" + data[0] + "')\">-</button></td></tr>'");
-        })
-    }).then(function () {
-      self.setStatus('Transaction complete!');
-    }).catch(function (e) {
-      console.log(e);
-      self.setStatus('Error sending coin; see log.');
-    })
+    $("#myTable tbody").empty();
+    const instance = await CrudApp.deployed();
+    const data = await instance.getOneByCountryName(countryName)
+
+    console.log(data)
+
+    $("#myTable tbody:last").append("<tr id='row_" + data[0] + "'><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2].toNumber() + "</td><td><button class=\"btn btn-danger btn-sm\" id=\"getOneByCountryName\" onclick=\"App.doDeleteOneByCountryName('" + data[0] + "')\">-</button></td></tr>'");
   },
 
-  getTotalCountry: function () {
-    CrudApp.deployed().then(function (instance) {
-      instance.getTotalCountries({ from: account }).then(function (data) {
-        alert("등록된 나라는 총 : " + data.toNumber() + "개 입니다.");
-      });
-      console.log(a);
-    }).then(function () {
-      this.setStatus('Transaction complete!');
-    }).catch(function (e) {
-      console.log(e);
-      this.setStatus('Error sending coin; see log.');
-    })
+  getTotalCountry: async function () {
+    $("#myTable tbody:last").empty();
+    const instance = await CrudApp.deployed();
+    const data = await instance.getTotalCountries(countryName, { from: account, gas: 9000000 })
+    console.log(data.toNumber());
+    alert("등록된 나라는 총 : " + data.toNumber() + "개 입니다.");
   },
 
-  doUpdateOneByCountryName: function () {
-    const self = this;
+  doUpdateOneByCountryName: async function () {
     const countryName = document.getElementById('countryName').value;
     const leader = document.getElementById('leader').value;
-
-    CrudApp.deployed().then(function (instance) {
-      instance.doUpdateLeader(countryName, leader, { from: account });
-    }).then(function () {
-      self.setStatus('Transaction complete!');
-    }).catch(function (e) {
-      console.log(e);
-      self.setStatus('Error sending coin; see log.');
-    })
+    $("#myTable tbody:last").empty();
+    const instance = await CrudApp.deployed();
+    const data = await instance.doUpdateLeader(countryName, leader, { from: account });
+    console.log(data)
   },
 
-  doDeleteOneByCountryName: function (countryName) {
+  doDeleteOneByCountryName: async function (countryName) {
     const self = this;
-    CrudApp.deployed().then(function (instance) {
-      instance.doDeleteCountry(countryName, { from: account });
-      $("#row_" + countryName).hide();
-    }).then(function () {
-      self.setStatus('Transaction complete!');
-    }).catch(function (e) {
-      console.log(e);
-      self.setStatus('Error sending coin; see log.');
-    })
+    const instance = await CrudApp.deployed();
+    await instance.doDeleteCountry(countryName, { from: account });
+
+    $("#row_" + countryName).hide();
+    self.setStatus('Transaction complete!');
   },
-  getMany: function () {
+  getList: async function () {
     const self = this;
-    CrudApp.deployed().then(function (instance) {
-      instance.getMany({ from: account })
-        .then(function (item) {
-          item.forEach(function (element) {
-            instance.getOneById(element, { from: account })
-              .then(function (data) {
-                $("#myTable tbody:last").append("<tr id='row_" + data[0] + "'><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2].toNumber() + "</td><td><button class=\"btn btn-danger btn-sm\" id=\"getOneByCountryName\" onclick=\"App.doDeleteOneByCountryName('" + data[0] + "')\">-</button></td></tr>'");
-              })
-          });
-        })
-    }).then(function () {
-      self.setStatus('Transaction complete!');
-    }).catch(function (e) {
-      console.log(e);
-      self.setStatus('Error sending coin; see log.');
-    })
+
+    const instance = await CrudApp.deployed();
+    const item = await instance.getList();
+    self.setStatus('Transaction complete!');
+    console.log(item)
+
+    // CrudApp.deployed().then(function (instance) {
+    //   instance.getList({ from: account })
+    //     .then(function (item) {
+    //       item.forEach(function (element) {
+    //         instance.getOneById(element, { from: account })
+    //           .then(function (data) {
+    //             $("#myTable tbody:last").append("<tr id='row_" + data[0] + "'><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2].toNumber() + "</td><td><button class=\"btn btn-danger btn-sm\" id=\"getOneByCountryName\" onclick=\"App.doDeleteOneByCountryName('" + data[0] + "')\">-</button></td></tr>'");
+    //           })
+    //       });
+    //     })
+    // }).then(function () {
+    //   self.setStatus('Transaction complete!');
+    // }).catch(function (e) {
+    //   console.log(e);
+    //   self.setStatus('Error sending coin; see log.');
+    // })
+  },
+  getMany: async function () {
+    $("#myTable tbody").empty();
+    const instance = await CrudApp.deployed();
+    const item = await instance.getMany({ from: account });
+    item.forEach(async function (element) {
+      const data = await instance.getOneById(element, { from: account })
+      console.log(data)
+      $("#myTable tbody:last").append("<tr id='row_" + data[0] + "'><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2].toNumber() + "</td><td><button class=\"btn btn-danger btn-sm\" id=\"getOneByCountryName\" onclick=\"App.doDeleteOneByCountryName('" + data[0] + "')\">-</button></td></tr>'");
+    });
+
+  },
+  getTest1: async function () {
+    alert('111')
+    const instance = await CrudApp.deployed();
+    await instance.addString('USA1', { from: account });
+  },
+  getTest2: async function () {
+    alert('111')
+    const instance = await CrudApp.deployed();
+    const dddd = await instance.getStrings();
+    console.log("dddd--------------------------")
+    console.log(dddd)
   }
 }
 

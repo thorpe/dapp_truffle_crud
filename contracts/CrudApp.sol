@@ -10,6 +10,8 @@ contract CrudApp {
         uint256 population;
     }
 
+    uint[] xs;
+
     country[] public countries;
 
     uint256 public totalCountries;
@@ -74,8 +76,12 @@ contract CrudApp {
     }
 
 
-    function compareStrings(string a, string b) internal pure returns (bool){
-        return keccak256(abi.encodePacked(a, b)) == keccak256(abi.encodePacked(a, b));
+//    function compareStrings(string a, string b) internal pure returns (bool){
+//        return keccak256(abi.encodePacked(a, b)) == keccak256(abi.encodePacked(a, b));
+//    }
+
+    function compareStrings (string a, string b)  internal pure returns (bool){
+        return keccak256(a) == keccak256(b);
     }
 
 
@@ -86,7 +92,7 @@ contract CrudApp {
 
     function getList() public view returns (country[] memory) {
         return countries;
-        }
+    }
 
     function getData() constant returns (bytes32, bytes32) {
         bytes32 a = "abcd";
@@ -107,7 +113,7 @@ contract CrudApp {
     }
 
 
-    string [] private strings;
+    string [] public strings;
 
     function addString(string memory str) public {
         strings.push(str);
@@ -117,4 +123,11 @@ contract CrudApp {
         return strings;
     }
 
+    function getMany() public view returns (uint[]) {
+        for (uint256 i = 0; i < totalCountries; i++) {
+            xs.push(i);
+        }
+
+        return xs;
+    }
 }
